@@ -1,3 +1,6 @@
+__author__ = "Ben Pang"
+__copyright__ = "2018, Ben Pang"
+
 import numpy as np 
 from sklearn.metrics import accuracy_score
 
@@ -9,11 +12,16 @@ class two_layer_perceptron(object):
 		self._c = learning_rate
 		self._threshold = threshold
 
+
+		#Implement the output layer as a matrix, where each node is represented by a row
+		#Each row is the weight vector for that node
 		self.output_layer = 3 - 6*np.random.random(size=(self._num_outputs, self._num_inputs + 1))
 
 	def _activation(self, z):
-		#sigmoid activation
-		#return 1 / (1+np.exp(-z))
+		"""
+		Heaviside step activation
+		:param z:<double> output of weighted sum
+		"""
 		result = 1 if z >= self._threshold else 0
 		return result
 	
@@ -27,7 +35,12 @@ class two_layer_perceptron(object):
 		return np.argmax(output), output
 
 	def train(self, train_x_raw, labels, num_epochs=1):
-
+		"""
+		:param train_x_raw:<nparray> training data n x m numpy array
+		:param labels: <nparray> label vector n = 1 numpy array
+		:param num_epochs:<int> number of passes through the training data before stopping training
+		"""
+		#append a column of 1's for the bias
 		train_x = np.hstack([train_x_raw, np.ones((train_x_raw.shape[0], 1))])
 		accuracy_log = []
 
