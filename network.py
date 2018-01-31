@@ -50,9 +50,9 @@ class two_layer_perceptron(object):
 
 		return accuracy_log
 
-	def test(self, test_x_raw):
+	def predict(self, test_x_raw):
 
-		test_x = np.hstack(test_x_raw, np.ones((test_x_raw.shape[0], 1)))
-		test_y = map(self.eval, test_x)
+		test_x = np.hstack([test_x_raw, np.ones((test_x_raw.shape[0], 1))])
+		test_y = list(map(lambda x: self.eval(x)[0], test_x))
 
 		return test_y
